@@ -1,4 +1,11 @@
 /* Export direct. */
 export default function () {
-    return console.log('test')
+    let nav = document.createElement('nav')
+    let ul = document.createElement('ul')
+    let navlink = ['User', 'FDP']
+    navlink.forEach( (t) => {
+        ul.append(t)
+    })
+    nav.append(ul)
+    return document.body.append(nav)
 }
