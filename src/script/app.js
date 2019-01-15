@@ -1,10 +1,13 @@
 /* Récupération du module direct depuis `export default function ()` */
 import { createComponent } from "./components/createComponent"
-import navigator from "./components/navigator";
 import providers from "./components/provider";
+import form from "./components/form.js";
+form()
 
 //providers()
 //navigator()
 
 
 createComponent('Coucou')
+
+import '../../node_modules/bootstrap/dist/css/bootstrap.css'
