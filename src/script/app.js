@@ -10,4 +10,4 @@ form()
 
 createComponent('Coucou')
 
-import '../../node_modules/bootstrap/dist/css/bootstrap.css'
+import '../style/app.sass'
