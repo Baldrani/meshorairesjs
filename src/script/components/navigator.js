@@ -7,5 +7,5 @@ export default function () {
         ul.append(t)
     })
     nav.append(ul)
-    return document.body.append(nav)
+    return document.querySelector('#app').append(nav)
 }

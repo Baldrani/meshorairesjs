@@ -54,5 +54,5 @@ export default function () {
 
     form.append(fromGroup, toGroup, dateGroup)
 
-    return document.body.append(form)
+    return document.querySelector('#app').append(form)
 }
