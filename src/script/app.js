@@ -8,6 +8,7 @@ form()
 //navigator()
 
 
-createComponent('Coucou')
+let comp = createComponent('Coucou', { 'class': ['x','y','z'], 'data-id': 'test joie bitch' })
+document.getElementById('app').append(comp)
 
 import '../style/app.sass'
