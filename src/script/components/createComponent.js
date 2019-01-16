@@ -21,6 +21,5 @@ export function createComponent(name, attributs)
         value = (typeof values === "object") ?  values.join(' ') : values //Case of an array
         el.setAttribute(key, value)
     }
-    console.log(el)
     return el
 }
