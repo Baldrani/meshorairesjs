@@ -1,5 +1,4 @@
 export function objectToQueryString(obj) {
-
     return Object.keys(obj || {})
         .filter((key) => {
             return ((obj[key] !== '') &&
@@ -13,9 +12,7 @@ export function objectToQueryString(obj) {
 
             return `${key}=${value}`;
 
-        })
-        .join('&');
-
+        }).join('&')
 }
 
 export function appendQueryStringToURL(url, queryString) {
