@@ -1,5 +1,6 @@
 import { createComponent, loadComponent } from "../helpers/helper";
 import ProviderSNCF from "../providers/ProviderSNCF";
+import Summary from  "../components/summary"
 
 
 class JourneyForm {
@@ -148,6 +149,8 @@ class JourneyForm {
             })
 
             console.log(journey)
+
+            new Summary(journey)
         }
 
         document.querySelector("#submit").addEventListener("click", submit);
