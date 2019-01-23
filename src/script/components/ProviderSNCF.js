@@ -2,11 +2,12 @@ import {objectToQueryString, appendQueryStringToURL} from "./helper";
 // require('dotenv').config()
 
 export default class ProviderSNCF {
-    constructor() {
-        this.init();
-    }
+    async get(url, params, callback) {
 
-    async init() {
+        params.token = '4434290e-24c3-47f0-a984-8524a09c049a'
+
+        let queryParams = objectToQueryString(params)
+
         let myHeaders = new Headers();
         myHeaders.append("Authorization", "4434290e-24c3-47f0-a984-8524a09c049a");
 
@@ -17,19 +18,12 @@ export default class ProviderSNCF {
             cache: 'default'
         };
 
-        const response = await fetch('https://api.sncf.com/v1/coverage', myInit)
+        const response = await fetch(appendQueryStringToURL(url, queryParams), myInit)
         const json = await response.json();
-        console.log(json);
-    }
 
+        return json
 
-    get(url, params, callback) {
-
-        params.token = '4434290e-24c3-47f0-a984-8524a09c049a'
-
-        let queryParams = objectToQueryString(params)
-
-        return fetch(appendQueryStringToURL(url, queryParams));
+        //return response.json()
 
     }
 
