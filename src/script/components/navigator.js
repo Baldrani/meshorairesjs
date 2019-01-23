@@ -1,10 +1,11 @@
-import { createComponent, refreshPage, loadComponent } from "./globalFunctions";
+import { createComponent, refreshPage, loadComponent } from "../helpers/helper";
 import form from './form'
-import { loadForm } from './form'
+import user from './user'
 import savedJourney from './savedJourney'
 
 const datasetToComponent = {
-    'form': form
+    'form': form,
+    'user': user,
 };
 
 //History saved to react from back !!! (On sauvegarde l'historique du component et on le recharge)
@@ -13,12 +14,12 @@ const datasetToComponent = {
 const links =
     [
         {
-            name: 'Home',
-            component: 'test'
+            name: 'Home', //Etat du traffic
+            component: 'home'
         },
         {
-            name: 'Mes Parcours',
-            component: 'savedJourney'
+            name: 'Utilisateur',
+            component: 'user'
         },
         {
             name: 'Formulaire',
@@ -35,18 +36,23 @@ class Navigator {
     buildNavigator()
     {
         function changePage(e){
-            refreshPage()
-            loadComponent(datasetToComponent[e.target.dataset.component])
-            loadForm() //TODO TO REMOVE
+            e.preventDefault()
+            datasetToComponent[e.target.dataset.href]()
+            //refreshPage()
+            //loadComponent()
         }
 
-        const nav = document.createElement('nav')
-        const ul = document.createElement('ul')
-        nav.append(ul)
+        const nav = createComponent('nav',{ class: ['navbar','navbar-expand-lg','navbar-light', 'bg-light'] })
+        const ul = createComponent('ul', { class: ['navbar-nav', 'mr-auto'] })
+        const div = createComponent('div', {class: ['collapse', 'navbar-collapse'] })
+        div.append(ul)
+        nav.append(div)
         this.links.forEach(({ name, component }) => {
-            const li = createComponent('li', {'data-component': component } )
-            li.innerText = name
-            li.onclick = changePage
+            const li = createComponent('li', { class: 'nav-item' })
+            const a = createComponent('a', { 'data-href': component, class: 'nav-link' })
+            a.innerText = name
+            a.onclick = changePage
+            li.append(a)
             ul.append(li)
         });
         document.getElementById('app').append(nav)

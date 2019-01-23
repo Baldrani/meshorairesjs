@@ -1,4 +1,4 @@
-import {objectToQueryString, appendQueryStringToURL} from "./helper";
+import { objectToQueryString, appendQueryStringToURL } from "../helpers/helper";
 //TODO require('dotenv').config()
 
 export default class ProviderSNCF {
@@ -22,8 +22,6 @@ export default class ProviderSNCF {
         const json = await response.json();
 
         return json
-
-        //return response.json()
 
     }
 
