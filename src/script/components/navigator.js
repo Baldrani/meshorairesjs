@@ -1,5 +1,6 @@
 import { createComponent, refreshPage, loadComponent } from "./globalFunctions";
 import form from './form'
+import { loadForm } from './form'
 import savedJourney from './savedJourney'
 
 const datasetToComponent = {
@@ -36,6 +37,7 @@ class Navigator {
         function changePage(e){
             refreshPage()
             loadComponent(datasetToComponent[e.target.dataset.component])
+            loadForm() //TODO TO REMOVE
         }
 
         const nav = document.createElement('nav')
