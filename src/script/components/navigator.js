@@ -1,7 +1,6 @@
 import { createComponent, refreshPage, loadComponent } from "../helpers/helper";
-import form from './form'
+import form from './journeyForm'
 import user from './user'
-import savedJourney from './savedJourney'
 
 const datasetToComponent = {
     'form': form,

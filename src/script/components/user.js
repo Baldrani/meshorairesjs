@@ -1,4 +1,8 @@
+class User {
+
+}
+
 export default function()
 {
-    alert('yolo')
+    new User()
 }
