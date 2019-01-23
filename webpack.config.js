@@ -1,21 +1,18 @@
+const webpack = require("webpack")
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const devMode = process.env.NODE_ENV !== 'production'
 
 
 module.exports = {
     entry: {
         js: './src/script/app.js',
-        //style: './src/style/app.sass',
     },
     output: {
         path: __dirname + "/public",
-        //filename: "[name].js"
         filename: "app.js"
     },
     plugins: [
+        new webpack.SourceMapDevToolPlugin({}),
         new BrowserSyncPlugin({
             host: 'localhost',
             port: 3000,

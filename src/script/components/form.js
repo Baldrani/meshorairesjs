@@ -1,5 +1,5 @@
 /* Export direct. */
-import { createComponent } from "./createComponent";
+import { createComponent } from "./globalFunctions";
 
 export default function () {
     let form = createComponent('form', { method: 'post', action: '/' })
@@ -30,5 +30,5 @@ export default function () {
     dateGroup.append(dateLabel, date)
     form.append(fromGroup, toGroup, dateGroup)
 
-    return document.querySelector('#app').append(form)
+    return form
 }

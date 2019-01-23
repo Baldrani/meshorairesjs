@@ -1,13 +1,13 @@
-/* name : String
-   attributs : Objects { 'class': ['x','y','z'], 'data-id': 'test test2' }
- */
-
 export function isString(name)
 {
     if (typeof name !== "string") throw "Parameter is not a String!";
     return true
 }
 
+/**
+ *  name : String
+ *  attributs : Object { 'class': ['x','y','z'], 'data-id': 'test test2' }
+ */
 export function createComponent(name, attributs)
 {
 
@@ -22,4 +22,18 @@ export function createComponent(name, attributs)
         el.setAttribute(key, value)
     }
     return el
+}
+
+export function refreshPage()
+{
+    //TODO Add a loader swang
+    const pageNode = document.getElementById('app')
+    while (pageNode.firstChild) {
+        pageNode.removeChild(pageNode.firstChild);
+    }
+}
+
+export function loadComponent(name)
+{
+    document.getElementById('app').append(name())
 }
