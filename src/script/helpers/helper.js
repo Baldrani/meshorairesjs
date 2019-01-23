@@ -51,7 +51,7 @@ export function createComponent(name, attributs)
 export function refreshPage()
 {
     //TODO Add a loader swang
-    const pageNode = document.getElementById('app')
+    const pageNode = document.getElementById('pageContent')
     while (pageNode.firstChild) {
         pageNode.removeChild(pageNode.firstChild);
     }
@@ -59,7 +59,5 @@ export function refreshPage()
 
 export function loadComponent(name)
 {
-    //const comp = name()
-    //document.getElementById('app').append(comp)
-    document.getElementById('app').append(name)
+    document.getElementById('pageContent').append(name)
 }

@@ -7,29 +7,29 @@ const datasetToComponent = {
     'user': user,
 };
 
-//History saved to react from back !!! (On sauvegarde l'historique du component et on le recharge)
+//TODO History saved to react from back !!! (On sauvegarde l'historique du component et on le recharge)
 
-
-const links =
-    [
-        {
-            name: 'Home', //Etat du traffic
-            component: 'home'
-        },
-        {
-            name: 'Utilisateur',
-            component: 'user'
-        },
-        {
-            name: 'Formulaire',
-            component: 'form'
-        }
-    ]
+const linksApp = [
+    {
+        name: 'Home', //Etat du traffic
+        component: 'home'
+    },
+    {
+        name: 'Utilisateur',
+        component: 'user'
+    },
+    {
+        name: 'Formulaire',
+        component: 'form'
+    }
+]
 
 
 class Navigator {
-    constructor(links){
+
+    constructor(links = linksApp){
         this.links = links
+        this.buildNavigator()
     }
 
     buildNavigator()
@@ -53,10 +53,11 @@ class Navigator {
             li.append(a)
             ul.append(li)
         });
-        document.getElementById('app').append(nav)
+        document.getElementById('app').append(nav) //TODO modifier
     }
 
 }
 
-let nav = new Navigator(links)
-nav.buildNavigator()
+export default function(){
+    new Navigator();
+}

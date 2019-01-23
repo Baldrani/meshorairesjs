@@ -2,4 +2,5 @@
 import '../style/app.sass'
 
 /* Components */
-import './components/navigator'
+import layout from './components/layout'
+layout()
