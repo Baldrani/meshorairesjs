@@ -37,9 +37,8 @@ class Navigator {
     {
         function changePage(e){
             e.preventDefault()
+            refreshPage()
             datasetToComponent[e.target.dataset.href]()
-            //refreshPage()
-            //loadComponent()
         }
 
         const nav = createComponent('nav',{ class: ['navbar','navbar-expand-lg','navbar-light', 'bg-light'] })

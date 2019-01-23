@@ -3,8 +3,8 @@ import ProviderSNCF from "../providers/ProviderSNCF";
 
 
 class JourneyForm {
-    constructor(){
 
+    constructor(){
         loadComponent(this.createForm())
         this.loadForm()
     }
@@ -155,6 +155,5 @@ class JourneyForm {
 }
 
 export default function() {
-    console.log('testa')
     new JourneyForm()
 }
