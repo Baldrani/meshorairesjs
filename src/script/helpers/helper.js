@@ -22,8 +22,7 @@ export function appendQueryStringToURL(url, queryString) {
     return `${url}${mark}${queryString}`;
 }
 
-export function isString(name)
-{
+export function isString(name) {
     if (typeof name !== "string") throw "Parameter is not a String!";
     return true
 }
@@ -33,23 +32,21 @@ export function isString(name)
  * name : String
  * attributs : Object { 'class': ['x','y','z'], 'data-id': 'test test2' }
  */
-export function createComponent(name, attributs)
-{
+export function createComponent(name, attributs) {
     isString(name)
     const el = document.createElement(name)
 
-    if(attributs === undefined) return el; //If no attributs specifieds return the element
+    if (attributs === undefined) return el; //If no attributs specifieds return the element
 
     for (const [key, values] of Object.entries(attributs)) {
         let value;
-        value = (typeof values === "object") ?  values.join(' ') : values //Case of an array
+        value = (typeof values === "object") ? values.join(' ') : values //Case of an array
         el.setAttribute(key, value)
     }
     return el
 }
 
-export function refreshPage()
-{
+export function refreshPage() {
     //TODO Add a loader swang
     const pageNode = document.getElementById('pageContent')
     while (pageNode.firstChild) {
@@ -57,7 +54,34 @@ export function refreshPage()
     }
 }
 
-export function loadComponent(name)
-{
+export function loadComponent(name) {
     document.getElementById('pageContent').append(name)
+}
+
+export function datetimeConvert(datetime) {
+    const parts = datetime.split(/([\d]{4})([\d]{2})([\d]{2})T([\d]{2})([\d]{2}).+/);
+
+    return `${parts[3]}/${parts[2]}/${parts[1]} ${parts[4]}h${parts[5]}`
+
+}
+
+String.prototype.toHHMMSS = function () {
+    let sec_num = parseInt(this, 10);
+    let hours = Math.floor(sec_num / 3600);
+    let minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+    let seconds = sec_num - (hours * 3600) - (minutes * 60);
+
+    if (hours < 10) {
+        hours = "0" + hours;
+    }
+
+    if (minutes < 10) {
+        minutes = "0" + minutes;
+    }
+
+    if (seconds < 10) {
+        seconds = "0" + seconds;
+    }
+
+    return hours + 'h' + minutes + 'min' + seconds + 's';
 }
