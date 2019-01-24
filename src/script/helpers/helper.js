@@ -65,6 +65,16 @@ export function datetimeConvert(datetime) {
 
 }
 
+
+
+
+export function propAccess(obj, path){
+    return path.trim().split('.').reduce((prev, curr) => {
+        return prev ? prev[curr] : null
+    }, obj || self)
+}
+
+
 String.prototype.toHHMMSS = function () {
     let sec_num = parseInt(this, 10);
     let hours = Math.floor(sec_num / 3600);
@@ -102,4 +112,13 @@ String.prototype.toHHMMSS = function () {
     }
 
     return time;
+}
+
+//@TODO use it to show use name
+String.prototype.interpolate = function (obj) {
+    const  regex = /{{(.+)}}/
+    const match = regex.exec(this)
+    const replacement = propAccess(obj, match[1])
+    const string = this.replace(regex, replacement)
+    return string
 }

@@ -1,6 +1,10 @@
 class User {
     constructor() {
-        alert("This is where it goes")
+        this.mamethod()
+    }
+
+    mamethod(){
+        console.log('Coucou toi ')
     }
 }
 
