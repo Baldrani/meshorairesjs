@@ -1,4 +1,5 @@
 import {createComponent, loadComponent, datetimeConvert} from "../helpers/helper";
+import JourneyDetail from  "../components/journeyDetail"
 
 class Summary {
 
@@ -8,7 +9,7 @@ class Summary {
     }
 
     createSummary() {
-        let content = createComponent('div', {id: 'summary-container'})
+        let content = createComponent('div', {id: 'journey-container'})
 
         let title = createComponent('h2', {class: 'title'})
         title.innerText = "Journey"
@@ -19,6 +20,7 @@ class Summary {
     }
 
     parseJourney(journey) {
+        console.log("Journey")
         console.log(journey)
 
         let chevron = createComponent('span', {})
@@ -32,8 +34,12 @@ class Summary {
 
             summary.append(departureDateTime, chevron.cloneNode(true))
 
+            console.log("Sections")
+            console.log(t.sections)
+
             let sections = t.sections.filter(array => Object.keys(array).length == 16)
 
+            console.log("Summary")
             console.log(sections)
 
             sections.forEach((t) => {
@@ -57,22 +63,41 @@ class Summary {
 
             let durationContainer = createComponent('span', {})
             let durationPicto = createComponent('img', {alt: 'duration', src: '/images/duration.svg', class: 'picto'})
-            durationContainer.innerText = t.durations.total.toString().toHHMMSS()
-            durationContainer.append(durationPicto)
+
+            let durationText = createComponent('span', {})
+            durationText.innerText = t.durations.total.toString().toHHMMSS()
+
+            durationContainer.append(durationPicto, durationText)
 
             let walkingContainer = createComponent('span', {})
             let walkingPicto = createComponent('img', {alt: 'walking', src: '/images/Walking.svg', class: 'picto'})
-            walkingContainer.innerText = t.durations.walking.toString().toHHMMSS()
-            walkingContainer.append(walkingPicto)
+
+            let walkingText = createComponent('span', {})
+            walkingText.innerText = t.durations.walking.toString().toHHMMSS()
+
+            walkingContainer.append(walkingPicto, walkingText)
 
             let pollutionContainer = createComponent('span', {})
             let pollutionPicto = createComponent('img', {alt: 'co0', src: '/images/co2.svg', class: 'picto'})
-            pollutionContainer.innerText = t.co2_emission.value + ' ' + t.co2_emission.unit
-            pollutionContainer.append(pollutionPicto)
+
+            let pollutionText = createComponent('span', {})
+            pollutionText.innerText = t.co2_emission.value + ' ' + t.co2_emission.unit
+
+            pollutionContainer.append(pollutionPicto, pollutionText)
 
             summary.append(arrivalDateTime, durationContainer, walkingContainer, pollutionContainer)
 
-            document.querySelector('#summary-container').append(summary)
+            document.querySelector('#journey-container').append(summary)
+
+            document.querySelector('#journey-container').append(new JourneyDetail(t.sections).content)
+
+            document.querySelector(".summary").addEventListener("click", (e) => {
+                e.stopPropagation()
+                e.stopImmediatePropagation()
+                console.log(e.currentTarget)
+                e.currentTarget.nextSibling.classList.toggle("show")
+            });
+
         })
     }
 }

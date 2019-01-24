@@ -36,17 +36,28 @@ class JourneyForm {
 
         let dateGroup = createComponent('div', { class: 'form-group' })
 
-        let dateLabel = createComponent('labe', { for: 'from' })
+        let dateInputGroup = createComponent('div', { class: 'input-group' })
+
+        let dateLabel = createComponent('label', { for: 'from' })
         dateLabel.innerText = "At :"
 
         let date = createComponent('input', { type: 'datetime-local', name: 'date', id: 'date', class: 'form-control' })
+
+        let dateButtonGroup = createComponent('div', {class: 'input-group-append' })
+
+        let dateButton = createComponent('button', {type: 'button', id: 'dateNow', class: 'btn btn-outline-secondary' })
+        dateButton.innerText = "Now"
 
         let submit = createComponent('input', { type: 'button', id: 'submit', class: 'btn btn-primary' })
         submit.value = "Submit"
 
         fromGroup.append(fromLabel, from, fromDropdown)
         toGroup.append(toLabel, to, toDropdown)
-        dateGroup.append(dateLabel, date)
+
+        dateButtonGroup.append(dateButton)
+
+        dateInputGroup.append(date, dateButtonGroup)
+        dateGroup.append(dateLabel, dateInputGroup)
         form.append(fromId, toId, fromGroup, toGroup, dateGroup, submit)
 
         return form
@@ -141,7 +152,15 @@ class JourneyForm {
             }
         });
 
+        document.querySelector("#dateNow").addEventListener("click", function (e) {
+            document.querySelector("#date").value = new Date().toJSON().slice(0,19)
+        });
+
         const submit = async function (e) {
+            if (document.querySelector('#journey-container')) {
+                document.querySelector('#journey-container').remove()
+            }
+
             let journey = await provider.get('https://api.sncf.com/v1/coverage/sncf/journeys', {
                 from: $fromId.value,
                 to: $toId.value ,

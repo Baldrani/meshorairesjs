@@ -83,5 +83,23 @@ String.prototype.toHHMMSS = function () {
         seconds = "0" + seconds;
     }
 
-    return hours + 'h' + minutes + 'min' + seconds + 's';
+    let time = ""
+
+    if (hours != 0) {
+        time += hours + 'h'
+    }
+
+    if (minutes != 0) {
+        time += minutes + 'min'
+    }
+
+    if (seconds != 0) {
+        time += seconds + 's'
+    }
+
+    if (hours == 0 && minutes == 0 && seconds == 0) {
+        time += seconds + 's'
+    }
+
+    return time;
 }

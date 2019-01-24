@@ -1,9 +1,20 @@
 @import "~bootstrap/scss/bootstrap"
 
-img.picto
-  vertical-align: middle
-  height: 1.6em
+.navbar
+  .nav-item:hover
+    cursor: pointer
 
+.form-group
+  position: relative
+
+  .list-group
+    position: absolute
+    width: 100%;
+    z-index: 10;
+
+    li:hover
+      cursor: pointer
+      background-color: #E2F1F9
 
 .with-bg-color
   display: inline-block
@@ -14,5 +25,39 @@ img.picto
   min-width: 20px
   padding: 0.2em 0.3em
 
-.summary span
-  padding: 0 5px
+#journey-container
+  position: relative
+
+  img.picto
+    vertical-align: middle
+    height: 1.6em
+
+  .summary
+    padding: 10px
+    background-color: #EFEFEF
+    margin: 5px 0
+    border-radius: 0.25rem
+    cursor: pointer
+
+    span
+      padding: 0 5px
+
+  .journey-detail
+    transform: scale(1, 0)
+    transform-origin: top
+    transition: transform ease 250ms
+    position: absolute
+    background-color: #E2F1F9
+    margin-top: -5px
+    border-radius: 0.25rem
+
+    .detail
+      display: block
+      padding: 5px
+
+      .with-bg-color
+        min-width: 26px
+
+    &.show
+      transform: scale(1, 1)
+      position: relative
