@@ -34,12 +34,6 @@ class Navigator {
 
     buildNavigator()
     {
-        function changePage(e){
-            e.preventDefault()
-            refreshPage()
-            datasetToComponent[e.target.dataset.href]()
-        }
-
         const nav = createComponent('nav',{ class: ['navbar','navbar-expand-lg','navbar-light', 'bg-light'] })
         const ul = createComponent('ul', { class: ['navbar-nav', 'mr-auto'] })
         const div = createComponent('div', {class: ['collapse', 'navbar-collapse'] })
@@ -49,11 +43,19 @@ class Navigator {
             const li = createComponent('li', { class: 'nav-item' })
             const a = createComponent('a', { 'data-href': component, class: 'nav-link' })
             a.innerText = name
-            a.onclick = changePage
+            a.onclick = this.changePage
             li.append(a)
             ul.append(li)
         });
         document.getElementById('app').append(nav) //TODO modifier
+    }
+
+    changePage(e){
+        e.preventDefault()
+        refreshPage()
+        //actualState =
+        history.pushState({}, "", e.target.dataset.href)
+        datasetToComponent[e.target.dataset.href]()
     }
 
 }

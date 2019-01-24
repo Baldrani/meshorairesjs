@@ -11,7 +11,7 @@ class Layout{
      */
     createLayout(){
         const container = createComponent('div', {class: 'container'})
-        const pageContent = createComponent('div', {id: 'pageContent'})
+        const pageContent = createComponent('div', {id: 'pageContent', class: 'my-5'})
         nav()
         container.append(pageContent)
         document.getElementById('app').append(container)
