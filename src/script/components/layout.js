@@ -10,6 +10,11 @@ class Layout{
      * This is where you buidl the layout of the app
      */
     createLayout(){
+        /*
+        let test = "Type d'animal: {{ type.name }}"
+        let animal = {type: {name: "chien"}}
+        console.log(test.interpolate(animal))
+        */
         const container = createComponent('div', {class: 'container'})
         const pageContent = createComponent('div', {id: 'pageContent', class: 'my-5'})
         nav()
