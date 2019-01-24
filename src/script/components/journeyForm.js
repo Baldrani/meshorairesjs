@@ -148,9 +148,7 @@ class JourneyForm {
                 datetime: document.querySelector("#date").value.replace(/-|:/gi, '')
             })
 
-            console.log(journey)
-
-            new Summary(journey)
+            new Summary(journey.journeys)
         }
 
         document.querySelector("#submit").addEventListener("click", submit);
