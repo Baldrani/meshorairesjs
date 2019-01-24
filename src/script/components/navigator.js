@@ -30,6 +30,7 @@ class Navigator {
     constructor(links = linksApp){
         this.links = links
         this.buildNavigator()
+        this.historyNavigation()
     }
 
     buildNavigator()
@@ -50,12 +51,18 @@ class Navigator {
         document.getElementById('app').append(nav) //TODO modifier
     }
 
-    changePage(e){
+    changePage(e){ //Understand why first one is not working
         e.preventDefault()
         refreshPage()
-        //actualState =
-        history.pushState({}, "", e.target.dataset.href)
+        history.pushState({ last: history.state === null ? e.target.dataset.href :'home' }, "", e.target.dataset.href)
         datasetToComponent[e.target.dataset.href]()
+    }
+
+    historyNavigation(){
+        window.onpopstate = () => {
+            refreshPage()
+            datasetToComponent[history.state.last]()
+        }
     }
 
 }
