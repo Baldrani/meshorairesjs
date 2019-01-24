@@ -1,4 +1,4 @@
-import { createComponent, refreshPage, loadComponent } from "../helpers/helper";
+import { createComponent, refreshPage, propAccess } from "../helpers/helper";
 import form from './journeyForm'
 import user from './user'
 
@@ -7,7 +7,6 @@ const datasetToComponent = {
     'user': user,
 };
 
-//TODO History saved to react from back !!! (On sauvegarde l'historique du component et on le recharge)
 
 const linksApp = [
     {
@@ -51,9 +50,10 @@ class Navigator {
         document.getElementById('app').append(nav) //TODO modifier
     }
 
-    changePage(e){ //Understand why first one is not working
+    changePage(e){ //TODO Understand why first one is not working
         e.preventDefault()
         refreshPage()
+        //propAccess(history, 'history.state.last')
         history.pushState({ last: history.state === null ? e.target.dataset.href :'home' }, "", e.target.dataset.href)
         datasetToComponent[e.target.dataset.href]()
     }

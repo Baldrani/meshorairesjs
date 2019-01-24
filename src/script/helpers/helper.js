@@ -65,6 +65,15 @@ export function datetimeConvert(datetime) {
 
 }
 
+export function propAccess(obj, path){
+
+    return path.split('.').reduce(function(prev, curr) {
+        return prev ? prev[curr] : null
+    }, obj || self)
+
+}
+
+
 String.prototype.toHHMMSS = function () {
     let sec_num = parseInt(this, 10);
     let hours = Math.floor(sec_num / 3600);
