@@ -90,14 +90,15 @@ class Summary {
             document.querySelector('#journey-container').append(summary)
 
             document.querySelector('#journey-container').append(new JourneyDetail(t.sections).content)
+        })
 
-            document.querySelector(".summary").addEventListener("click", (e) => {
-                e.stopPropagation()
-                e.stopImmediatePropagation()
-                console.log(e.currentTarget)
-                e.currentTarget.nextSibling.classList.toggle("show")
-            });
-
+        document.querySelectorAll(".summary").forEach((t) => {
+          t.addEventListener("click", (e) => {
+              e.stopPropagation()
+              e.stopImmediatePropagation()
+              console.log(e.currentTarget)
+              e.currentTarget.nextSibling.classList.toggle("show")
+          });
         })
     }
 }
