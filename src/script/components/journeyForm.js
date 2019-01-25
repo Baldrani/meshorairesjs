@@ -18,6 +18,14 @@ class JourneyForm {
 
         let fromGroup = createComponent('div', {class: 'form-group'})
 
+        let fromInputGroup = createComponent('div', {class: 'input-group'})
+
+        let fromButtonGroup = createComponent('div', {class: 'input-group-append'})
+
+        let fromButton = createComponent('button', {type: 'button', id: 'geoloc', class: 'btn btn-outline-secondary'})
+
+        let fromPicto = createComponent('img', {src: '/images/location.svg', class: 'picto geoloc'})
+
         let fromLabel = createComponent('label', {for: "from"})
         fromLabel.innerText = "From :"
 
@@ -52,12 +60,17 @@ class JourneyForm {
         submit.value = "Submit"
 
         fromGroup.append(fromLabel, from, fromDropdown)
+        fromButton.append(fromPicto)
+        fromButtonGroup.append(fromButton)
+        fromInputGroup.append(from, fromButtonGroup)
+        fromGroup.append(fromLabel, fromInputGroup)
+
         toGroup.append(toLabel, to, toDropdown)
 
         dateButtonGroup.append(dateButton)
-
         dateInputGroup.append(date, dateButtonGroup)
         dateGroup.append(dateLabel, dateInputGroup)
+
         form.append(fromId, toId, fromGroup, toGroup, dateGroup, submit)
 
         return form
@@ -156,6 +169,10 @@ class JourneyForm {
             document.querySelector("#date").value = new Date().toJSON().slice(0, 16)
         });
 
+        document.querySelector("#geoloc").addEventListener("click", function (e) {
+            getLocation()
+        });
+
         const submit = async function (e) {
             loaderStart()
 
@@ -166,9 +183,18 @@ class JourneyForm {
 
             refreshContainer('#journey-container')
 
+            let fromValue = null
+
+            if ($fromId.value == '') {
+                fromValue = $from.value
+            } else {
+                fromValue = $fromId.value
+            }
+
+            console.log(fromValue)
 
             let journey = await provider.get('https://api.sncf.com/v1/coverage/sncf/journeys', {
-                from: $fromId.value,
+                from: fromValue,
                 to: $toId.value,
                 datetime: document.querySelector("#date").value.replace(/-|:/gi, '')
             })
@@ -189,6 +215,19 @@ function validateForm() {
     }
 
     return true
+}
+
+function getLocation() {
+    if (navigator.geolocation) {
+        let coord = navigator.geolocation.getCurrentPosition(myPosition)
+    } else {
+        alert("La géolocalisation n'est pas supportée par votre navigateur")
+    }
+}
+
+function myPosition(position) {
+    document.querySelector('#from').value = position.coords.longitude + ';' + position.coords.latitude
+    document.querySelector('#fromId').value = ''
 }
 
 export default function () {
