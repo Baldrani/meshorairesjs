@@ -6,14 +6,14 @@ import form from './journeyForm'
 
 const datasetToComponent = {
     'form': form,
-    'home': home
+    'favoris': home
 };
 
 
 const linksApp = [
     {
-        name: 'Home', //Etat du traffic
-        component: 'home'
+        name: 'Favoris',
+        component: 'favoris'
     },
     {
         name: 'Formulaire',
