@@ -54,7 +54,7 @@ class JourneyDetail {
             content.append(step)
 
         })
-        
+
         return content
     }
 

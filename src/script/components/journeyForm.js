@@ -1,4 +1,4 @@
-import { createComponent, loadComponent } from "../helpers/helper";
+import {createComponent, loadComponent, loaderStart, loaderStop, refreshContainer} from "../helpers/helper";
 import ProviderSNCF from "../providers/ProviderSNCF";
 import Summary from  "../components/summary"
 
@@ -153,13 +153,13 @@ class JourneyForm {
         });
 
         document.querySelector("#dateNow").addEventListener("click", function (e) {
-            document.querySelector("#date").value = new Date().toJSON().slice(0,19)
+            document.querySelector("#date").value = new Date().toJSON().slice(0,16)
         });
 
         const submit = async function (e) {
-            if (document.querySelector('#journey-container')) {
-                document.querySelector('#journey-container').remove()
-            }
+            loaderStart()
+            refreshContainer('#journey-container')
+
 
             let journey = await provider.get('https://api.sncf.com/v1/coverage/sncf/journeys', {
                 from: $fromId.value,
@@ -168,6 +168,8 @@ class JourneyForm {
             })
 
             new Summary(journey.journeys)
+            loaderStop();
+
         }
 
         document.querySelector("#submit").addEventListener("click", submit);
