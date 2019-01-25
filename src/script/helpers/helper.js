@@ -22,8 +22,14 @@ export function appendQueryStringToURL(url, queryString) {
     return `${url}${mark}${queryString}`;
 }
 
+function type_check(val, conf) {
+    return (conf.type ? typeof val === conf.type : true)
+        && (conf.value ? val === conf.value : true)
+        && (conf.enum ? conf.enum.includes(val) : true)
+}
+
 export function isString(name) {
-    if (typeof name !== "string") throw "Parameter is not a String!";
+    if (!type_check(name, {type: 'string'})) throw "Parameter is not a String!";
     return true
 }
 
