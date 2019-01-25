@@ -1,15 +1,16 @@
 class User {
-    constructor() {
-        this.mamethod()
+     constructor(name) {
+        this.name = name;
     }
 
-    mamethod(){
-        console.log('Coucou toi ')
-    }
 
     static saveToFavorite(e)
     {
         console.log('test'  + e)
+    }
+
+    User.prototype.greet = function() {
+        return `${this.name} says hello.`;
     }
 }
 
