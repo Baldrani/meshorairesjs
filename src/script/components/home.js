@@ -29,8 +29,10 @@ class Home {
     unstar(){
         if(document.querySelector('.star') !== null){
             document.querySelector('.star').addEventListener('click', function(e) {
-                e.target.offsetParent.remove()
-                localStorage.removeItem('favorite')
+                if(confirm("Vous allez retirer votre trajet favori. Etes vous sur ?")){
+                    e.target.offsetParent.remove()
+                    localStorage.removeItem('favorite')
+                }
             })
         }
     }

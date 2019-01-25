@@ -10,7 +10,6 @@ class JourneyDetail {
         let content = createComponent('div', {class: 'journey-detail'})
 
         sections.forEach((t) => {
-            console.log(t)
             let step = createComponent('span', {class: 'detail'})
 
             if (t.type == 'transfer' || t.type == 'crow_fly') {
@@ -55,8 +54,6 @@ class JourneyDetail {
             content.append(step)
 
         })
-
-        console.log(content)
 
         return content
     }

@@ -33,7 +33,7 @@ class Navigator {
     {
         const nav = createComponent('nav',{ class: ['navbar','navbar-expand-lg','navbar-light', 'bg-light'] })
         const ul = createComponent('ul', { class: ['navbar-nav', 'mr-auto'] })
-        const div = createComponent('div', {class: ['collapse', 'navbar-collapse'] })
+        const div = createComponent('div', {class: ['navbar-collapse'] })
         div.append(ul)
         nav.append(div)
         this.links.forEach(({ name, component }) => {

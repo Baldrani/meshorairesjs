@@ -22,8 +22,14 @@ export function appendQueryStringToURL(url, queryString) {
     return `${url}${mark}${queryString}`;
 }
 
+function type_check(val, conf) {
+    return (conf.type ? typeof val === conf.type : true)
+        && (conf.value ? val === conf.value : true)
+        && (conf.enum ? conf.enum.includes(val) : true)
+}
+
 export function isString(name) {
-    if (typeof name !== "string") throw "Parameter is not a String!";
+    if (!type_check(name, {type: 'string'})) throw "Parameter is not a String!";
     return true
 }
 
@@ -47,11 +53,27 @@ export function createComponent(name, attributs) {
 }
 
 export function refreshPage() {
-    //TODO Add a loader swang
     const pageNode = document.getElementById('pageContent')
     while (pageNode.firstChild) {
         pageNode.removeChild(pageNode.firstChild);
     }
+}
+
+export function refreshContainer(container) {
+    const pageNode = document.querySelector(container)
+
+    if (pageNode  !== null) {
+        pageNode.remove()
+    }
+}
+
+export function loaderStart() {
+    let loader = createComponent('img', {id: 'loader', src: '/images/loader.svg', class: 'loader'})
+    document.getElementById('app').append(loader)
+}
+
+export function loaderStop() {
+    document.getElementById('loader').remove()
 }
 
 export function loadComponent(name) {
@@ -64,9 +86,6 @@ export function datetimeConvert(datetime) {
     return `${parts[3]}/${parts[2]}/${parts[1]} ${parts[4]}h${parts[5]}`
 
 }
-
-
-
 
 export function propAccess(obj, path){
     return path.trim().split('.').reduce((prev, curr) => {

@@ -1,63 +1,76 @@
-import { createComponent, loadComponent } from "../helpers/helper";
+import {createComponent, loadComponent, loaderStart, loaderStop, refreshContainer} from "../helpers/helper";
 import ProviderSNCF from "../providers/ProviderSNCF";
-import Summary from  "../components/summary"
+import Summary from "../components/summary"
 
 
 class JourneyForm {
 
-    constructor(){
+    constructor() {
         loadComponent(this.createForm())
         this.loadForm()
     }
 
-    createForm(){
-        let form = createComponent('form', { method: 'post', action: '/' })
+    createForm() {
+        let form = createComponent('form', {method: 'post', action: '/'})
 
-        let fromId = createComponent('input', { type: 'hidden', name: 'fromId', id: 'from-id' })
-        let toId = createComponent('input', { type: 'hidden', name: 'toId', id: 'to-id' })
+        let fromId = createComponent('input', {type: 'hidden', name: 'fromId', id: 'from-id'})
+        let toId = createComponent('input', {type: 'hidden', name: 'toId', id: 'to-id'})
 
-        let fromGroup = createComponent('div', { class: 'form-group' })
+        let fromGroup = createComponent('div', {class: 'form-group'})
 
-        let fromLabel = createComponent('label', { for: "from" })
+        let fromInputGroup = createComponent('div', {class: 'input-group'})
+
+        let fromButtonGroup = createComponent('div', {class: 'input-group-append'})
+
+        let fromButton = createComponent('button', {type: 'button', id: 'geoloc', class: 'btn btn-outline-secondary'})
+
+        let fromPicto = createComponent('img', {src: '/images/location.svg', class: 'picto geoloc'})
+
+        let fromLabel = createComponent('label', {for: "from"})
         fromLabel.innerText = "From :"
 
-        let from = createComponent('input', { type: 'text', id: 'from', class: 'form-control', autocomplete: 'off' })
+        let from = createComponent('input', {type: 'text', id: 'from', class: 'form-control', autocomplete: 'off'})
 
-        let fromDropdown = createComponent('ul', { class: 'list-group', id: 'from-dropdown' })
+        let fromDropdown = createComponent('ul', {class: 'list-group', id: 'from-dropdown'})
 
-        let toGroup = createComponent('div', {class: 'form-group' })
+        let toGroup = createComponent('div', {class: 'form-group'})
 
-        let toLabel = createComponent('label', { for: 'from' })
+        let toLabel = createComponent('label', {for: 'from'})
         toLabel.innerText = "To :"
 
-        let to = createComponent('input', {type: 'text', id: 'to', class: 'form-control', autocomplete: 'off' })
+        let to = createComponent('input', {type: 'text', id: 'to', class: 'form-control', autocomplete: 'off'})
 
-        let toDropdown = createComponent('ul', { class: 'list-group', id: 'to-dropdown' })
+        let toDropdown = createComponent('ul', {class: 'list-group', id: 'to-dropdown'})
 
-        let dateGroup = createComponent('div', { class: 'form-group' })
+        let dateGroup = createComponent('div', {class: 'form-group'})
 
-        let dateInputGroup = createComponent('div', { class: 'input-group' })
+        let dateInputGroup = createComponent('div', {class: 'input-group'})
 
-        let dateLabel = createComponent('label', { for: 'from' })
+        let dateLabel = createComponent('label', {for: 'from'})
         dateLabel.innerText = "At :"
 
-        let date = createComponent('input', { type: 'datetime-local', name: 'date', id: 'date', class: 'form-control' })
+        let date = createComponent('input', {type: 'datetime-local', name: 'date', id: 'date', class: 'form-control'})
 
-        let dateButtonGroup = createComponent('div', {class: 'input-group-append' })
+        let dateButtonGroup = createComponent('div', {class: 'input-group-append'})
 
-        let dateButton = createComponent('button', {type: 'button', id: 'dateNow', class: 'btn btn-outline-secondary' })
+        let dateButton = createComponent('button', {type: 'button', id: 'dateNow', class: 'btn btn-outline-secondary'})
         dateButton.innerText = "Now"
 
-        let submit = createComponent('input', { type: 'button', id: 'submit', class: 'btn btn-primary' })
+        let submit = createComponent('input', {type: 'button', id: 'submit', class: 'btn btn-primary'})
         submit.value = "Submit"
 
         fromGroup.append(fromLabel, from, fromDropdown)
+        fromButton.append(fromPicto)
+        fromButtonGroup.append(fromButton)
+        fromInputGroup.append(from, fromButtonGroup)
+        fromGroup.append(fromLabel, fromInputGroup)
+
         toGroup.append(toLabel, to, toDropdown)
 
         dateButtonGroup.append(dateButton)
-
         dateInputGroup.append(date, dateButtonGroup)
         dateGroup.append(dateLabel, dateInputGroup)
+
         form.append(fromId, toId, fromGroup, toGroup, dateGroup, submit)
 
         return form
@@ -153,27 +166,70 @@ class JourneyForm {
         });
 
         document.querySelector("#dateNow").addEventListener("click", function (e) {
-            document.querySelector("#date").value = new Date().toJSON().slice(0,19)
+            document.querySelector("#date").value = new Date().toJSON().slice(0, 16)
+        });
+
+        document.querySelector("#geoloc").addEventListener("click", function (e) {
+            getLocation()
         });
 
         const submit = async function (e) {
-            if (document.querySelector('#journey-container')) {
-                document.querySelector('#journey-container').remove()
+            loaderStart()
+
+            if (!validateForm()) {
+                loaderStop()
+                return false
             }
 
+            refreshContainer('#journey-container')
+
+            let fromValue = null
+
+            if ($fromId.value == '') {
+                fromValue = $from.value
+            } else {
+                fromValue = $fromId.value
+            }
+
+            console.log(fromValue)
+
             let journey = await provider.get('https://api.sncf.com/v1/coverage/sncf/journeys', {
-                from: $fromId.value,
-                to: $toId.value ,
+                from: fromValue,
+                to: $toId.value,
                 datetime: document.querySelector("#date").value.replace(/-|:/gi, '')
             })
 
             new Summary(journey.journeys)
+            loaderStop();
+
         }
 
         document.querySelector("#submit").addEventListener("click", submit);
     }
 }
 
-export default function() {
+function validateForm() {
+    if (document.querySelector("#from").value == "" || document.querySelector("#to").value == "" || document.querySelector("#date").value == "") {
+        alert("Tous les champs ne sont pas remplis")
+        return false
+    }
+
+    return true
+}
+
+function getLocation() {
+    if (navigator.geolocation) {
+        let coord = navigator.geolocation.getCurrentPosition(myPosition)
+    } else {
+        alert("La géolocalisation n'est pas supportée par votre navigateur")
+    }
+}
+
+function myPosition(position) {
+    document.querySelector('#from').value = position.coords.longitude + ';' + position.coords.latitude
+    document.querySelector('#from-id').value = ''
+}
+
+export default function () {
     new JourneyForm()
 }

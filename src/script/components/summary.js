@@ -20,11 +20,12 @@ class Summary {
     }
 
     parseJourney(journey) {
-        console.log("Journey")
-        console.log(journey)
-
         let chevron = createComponent('span', {})
         chevron.innerText = ">"
+
+        if (journey == null){
+            return
+        }
 
         journey.forEach((t) => {
             let summary = createComponent('div', {class: 'summary'})
@@ -34,13 +35,7 @@ class Summary {
 
             summary.append(departureDateTime, chevron.cloneNode(true))
 
-            console.log("Sections")
-            console.log(t.sections)
-
             let sections = t.sections.filter(array => Object.keys(array).length == 16)
-
-            console.log("Summary")
-            console.log(sections)
 
             sections.forEach((t) => {
                 let section = createComponent('span', {})
@@ -107,7 +102,6 @@ class Summary {
               }
           });
         })
-        document.querySelector('.star').removeEventListener('click', true)
     }
 
     saveToFavorite(e)
