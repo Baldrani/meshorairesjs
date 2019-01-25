@@ -21,12 +21,13 @@ const linksApp = [
     }
 ]
 
-const userConnected = { user: { name: "Maël" } }
+const userConnected = null
 
 
 class Navigator {
 
     constructor(links = linksApp){
+        this.setUser()
         this.links = links
         this.buildNavigator()
         this.historyNavigation()
@@ -49,7 +50,7 @@ class Navigator {
             ul.append(li)
         });
         const userDiv = createComponent('div')
-        userDiv.innerHTML = welcomeMessage.interpolate(userConnected)
+        userDiv.innerHTML = welcomeMessage.interpolate(JSON.parse(localStorage.getItem('user')))
         div.append(userDiv)
         document.getElementById('app').append(nav) //TODO modifier
     }
@@ -66,6 +67,15 @@ class Navigator {
             refreshPage()
             datasetToComponent[history.state.last]()
         }
+    }
+
+    setUser() {
+        let name = prompt("Please enter your name", "User");
+
+        let user = { user: { name: name } }
+
+        localStorage.setItem('user', JSON.stringify(user))
+
     }
 
 }

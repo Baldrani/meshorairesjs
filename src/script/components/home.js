@@ -11,6 +11,11 @@ class Home {
         console.log(container)
         const div = document.createElement('div')
         div.innerHTML = JSON.parse(localStorage.getItem('favorite'))
+
+        if (div.innerHTML == "") {
+            div.innerHTML = "Vous n'avez pas de favoris"
+        }
+
         container.append(div)
         document.getElementById('pageContent').append(container)
         document.querySelectorAll(".summary").forEach((t) => {
