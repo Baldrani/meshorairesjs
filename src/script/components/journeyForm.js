@@ -227,7 +227,7 @@ function getLocation() {
 
 function myPosition(position) {
     document.querySelector('#from').value = position.coords.longitude + ';' + position.coords.latitude
-    document.querySelector('#fromId').value = ''
+    document.querySelector('#from-id').value = ''
 }
 
 export default function () {
