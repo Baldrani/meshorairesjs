@@ -85,21 +85,30 @@ class Summary {
 
             pollutionContainer.append(pollutionPicto, pollutionText)
 
-            summary.append(arrivalDateTime, durationContainer, walkingContainer, pollutionContainer)
+            let favorite = createComponent('img', {src: '/images/empty-star.svg', class: 'picto'})
+            favorite.onclick = this.saveToFavorite
+
+            summary.append(arrivalDateTime, durationContainer, walkingContainer, pollutionContainer, favorite)
 
             document.querySelector('#journey-container').append(summary)
 
             document.querySelector('#journey-container').append(new JourneyDetail(t.sections).content)
         })
 
+        //TODO Export it so I can reuse it
         document.querySelectorAll(".summary").forEach((t) => {
           t.addEventListener("click", (e) => {
               e.stopPropagation()
               e.stopImmediatePropagation()
-              console.log(e.currentTarget)
               e.currentTarget.nextSibling.classList.toggle("show")
           });
         })
+    }
+
+    saveToFavorite(e)
+    {
+        //FREAKING JSON.stringify remove function :'(
+        localStorage.setItem('test', JSON.stringify(e.target.parentElement.innerHTML))
     }
 }
 

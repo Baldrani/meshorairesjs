@@ -1,10 +1,12 @@
 import { createComponent, refreshPage, propAccess } from "../helpers/helper";
-import form from './journeyForm'
+import home from './home'
 import user from './user'
+import form from './journeyForm'
 
 const datasetToComponent = {
     'form': form,
     'user': user,
+    'home': home
 };
 
 
@@ -53,8 +55,8 @@ class Navigator {
     changePage(e){ //TODO Understand why first one is not working
         e.preventDefault()
         refreshPage()
-        //propAccess(history, 'history.state.last')
-        history.pushState({ last: history.state === null ? e.target.dataset.href :'home' }, "", e.target.dataset.href)
+
+        history.pushState({ last: propAccess(history, 'history.state.last') === null ? e.target.dataset.href :'home' }, "", e.target.dataset.href)
         datasetToComponent[e.target.dataset.href]()
     }
 

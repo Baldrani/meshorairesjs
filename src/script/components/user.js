@@ -6,6 +6,11 @@ class User {
     mamethod(){
         console.log('Coucou toi ')
     }
+
+    static saveToFavorite(e)
+    {
+        console.log('test'  + e)
+    }
 }
 
 export default function()

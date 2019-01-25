@@ -7,7 +7,7 @@ class Layout{
     }
 
     /**
-     * This is where you buidl the layout of the app
+     * This is where you build the layout of the app
      */
     createLayout(){
         /*
@@ -20,6 +20,7 @@ class Layout{
         nav()
         container.append(pageContent)
         document.getElementById('app').append(container)
+        //nav.changePage('home')
     }
 }
 
