@@ -133,7 +133,6 @@ String.prototype.toHHMMSS = function () {
     return time;
 }
 
-//@TODO use it to show use name
 String.prototype.interpolate = function (obj) {
     const  regex = /{{(.+)}}/
     const match = regex.exec(this)

@@ -1,4 +1,5 @@
 import { createComponent, refreshPage, propAccess } from "../helpers/helper";
+import '../helpers/helper'
 import home from './home'
 import user from './user'
 import form from './journeyForm'
@@ -20,6 +21,8 @@ const linksApp = [
     }
 ]
 
+const userConnected = { user: { name: "Maël" } }
+
 
 class Navigator {
 
@@ -34,6 +37,7 @@ class Navigator {
         const nav = createComponent('nav',{ class: ['navbar','navbar-expand-lg','navbar-light', 'bg-light'] })
         const ul = createComponent('ul', { class: ['navbar-nav', 'mr-auto'] })
         const div = createComponent('div', {class: ['navbar-collapse'] })
+        const welcomeMessage = "Bonjour {{ user.name }}"
         div.append(ul)
         nav.append(div)
         this.links.forEach(({ name, component }) => {
@@ -44,6 +48,9 @@ class Navigator {
             li.append(a)
             ul.append(li)
         });
+        const userDiv = createComponent('div')
+        userDiv.innerHTML = welcomeMessage.interpolate(userConnected)
+        div.append(userDiv)
         document.getElementById('app').append(nav) //TODO modifier
     }
 
