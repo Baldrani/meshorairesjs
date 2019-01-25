@@ -85,7 +85,7 @@ class Summary {
 
             pollutionContainer.append(pollutionPicto, pollutionText)
 
-            let favorite = createComponent('img', {src: '/images/empty-star.svg', class: 'picto'})
+            let favorite = createComponent('img', {src: '/images/empty-star.svg', class: ['picto','star']})
             favorite.onclick = this.saveToFavorite
 
             summary.append(arrivalDateTime, durationContainer, walkingContainer, pollutionContainer, favorite)
@@ -100,15 +100,21 @@ class Summary {
           t.addEventListener("click", (e) => {
               e.stopPropagation()
               e.stopImmediatePropagation()
-              e.currentTarget.nextSibling.classList.toggle("show")
+              if(e.target.classList.contains('star')){
+                  return
+              } else {
+                  e.currentTarget.nextSibling.classList.toggle("show")
+              }
           });
         })
+        document.querySelector('.star').removeEventListener('click', true)
     }
 
     saveToFavorite(e)
     {
         //FREAKING JSON.stringify remove function :'(
-        localStorage.setItem('test', JSON.stringify(e.target.parentElement.innerHTML))
+        e.target.src = "/images/plain-star.svg"
+        localStorage.setItem('favorite', JSON.stringify(e.target.parentNode.parentNode.innerHTML))
     }
 }
 

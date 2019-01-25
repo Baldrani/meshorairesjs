@@ -5,7 +5,6 @@ import form from './journeyForm'
 
 const datasetToComponent = {
     'form': form,
-    'user': user,
     'home': home
 };
 
@@ -14,10 +13,6 @@ const linksApp = [
     {
         name: 'Home', //Etat du traffic
         component: 'home'
-    },
-    {
-        name: 'Utilisateur',
-        component: 'user'
     },
     {
         name: 'Formulaire',
@@ -52,10 +47,9 @@ class Navigator {
         document.getElementById('app').append(nav) //TODO modifier
     }
 
-    changePage(e){ //TODO Understand why first one is not working
+    changePage(e){
         e.preventDefault()
         refreshPage()
-
         history.pushState({ last: propAccess(history, 'history.state.last') === null ? e.target.dataset.href :'home' }, "", e.target.dataset.href)
         datasetToComponent[e.target.dataset.href]()
     }
