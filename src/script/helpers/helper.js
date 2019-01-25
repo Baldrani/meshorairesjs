@@ -90,7 +90,7 @@ export function datetimeConvert(datetime) {
 export function propAccess(obj, path){
     return path.trim().split('.').reduce((prev, curr) => {
         return prev ? prev[curr] : null
-    }, obj || self)
+    }, obj)
 }
 
 
