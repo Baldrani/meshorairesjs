@@ -23,6 +23,10 @@ class Summary {
         let chevron = createComponent('span', {})
         chevron.innerText = ">"
 
+        if (journey == null){
+            return
+        }
+
         journey.forEach((t) => {
             let summary = createComponent('div', {class: 'summary'})
 
